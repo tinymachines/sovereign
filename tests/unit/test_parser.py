@@ -3,8 +3,9 @@ Tests for PROJECT SOVEREIGN parser.
 """
 
 import pytest
-from project_sovereign.core.parser import SovereignParser, ParseError
-from project_sovereign.core.ast_nodes import Program, Instruction, Register, Immediate
+
+from project_sovereign.core.ast_nodes import Immediate, Register
+from project_sovereign.core.parser import ParseError
 
 
 class TestSovereignParser:

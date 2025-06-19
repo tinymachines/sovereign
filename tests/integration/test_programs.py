@@ -3,7 +3,6 @@ Integration tests for complete PROJECT SOVEREIGN programs.
 """
 
 import pytest
-from project_sovereign.core.interpreter import SovereignInterpreter
 
 
 class TestPrograms:
@@ -75,7 +74,7 @@ class TestPrograms:
         CALL function
         PUSH #30
         HALT
-        
+
         function:
         PUSH #20
         RET
@@ -92,10 +91,10 @@ class TestPrograms:
         JZ zero_branch
         PUSH #99
         JMP end
-        
+
         zero_branch:
         PUSH #42
-        
+
         end:
         HALT
         """

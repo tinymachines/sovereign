@@ -6,7 +6,6 @@ Defines the structure of parsed programs and instructions.
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import List, Dict, Any, Optional, Union
 
 
 @dataclass
@@ -81,7 +80,7 @@ class Instruction(ASTNode):
     """Instruction with opcode and operands."""
 
     opcode: str
-    operands: List[Operand]
+    operands: list[Operand]
 
     def __str__(self) -> str:
         if self.operands:
@@ -105,8 +104,8 @@ class Label(ASTNode):
 class Program(ASTNode):
     """Complete program with instructions and labels."""
 
-    instructions: List[Instruction]
-    labels: Dict[str, int]  # Label name -> instruction index
+    instructions: list[Instruction]
+    labels: dict[str, int]  # Label name -> instruction index
 
     def __str__(self) -> str:
         lines = []
@@ -118,7 +117,7 @@ class Program(ASTNode):
             lines.append(f"  {instruction}")
         return "\n".join(lines)
 
-    def get_instruction_at_label(self, label: str) -> Optional[Instruction]:
+    def get_instruction_at_label(self, label: str) -> Instruction | None:
         """Get instruction at specified label."""
         if label in self.labels:
             index = self.labels[label]

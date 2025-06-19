@@ -9,9 +9,9 @@ Defines the 32 base instructions across 4 categories:
 """
 
 from abc import ABC, abstractmethod
-from enum import Enum
-from typing import Any, Dict, List, Optional, Protocol
 from dataclasses import dataclass
+from enum import Enum
+from typing import Any
 
 
 class OpCodeCategory(Enum):
@@ -27,12 +27,12 @@ class OpCodeCategory(Enum):
 class ExecutionContext:
     """Context for op-code execution."""
 
-    data_stack: List[Any]
-    control_stack: List[Any]
-    memory: Dict[str, Any]
+    data_stack: list[Any]
+    control_stack: list[Any]
+    memory: dict[str, Any]
     program_counter: int
-    registers: Dict[str, Any]
-    error_state: Optional[str] = None
+    registers: dict[str, Any]
+    error_state: str | None = None
 
 
 class OpCode(ABC):
@@ -588,7 +588,7 @@ class OpCodeRegistry:
     """Registry for all available op-codes."""
 
     def __init__(self):
-        self._opcodes: Dict[str, OpCode] = {}
+        self._opcodes: dict[str, OpCode] = {}
         self._register_builtin_opcodes()
 
     def _register_builtin_opcodes(self) -> None:
@@ -635,7 +635,7 @@ class OpCodeRegistry:
         for opcode in opcodes:
             self._opcodes[opcode.name] = opcode
 
-    def get_opcode(self, name: str) -> Optional[OpCode]:
+    def get_opcode(self, name: str) -> OpCode | None:
         """Get op-code by name."""
         return self._opcodes.get(name.upper())
 
@@ -643,7 +643,7 @@ class OpCodeRegistry:
         """Register a new op-code."""
         self._opcodes[opcode.name] = opcode
 
-    def list_opcodes(self, category: Optional[OpCodeCategory] = None) -> List[OpCode]:
+    def list_opcodes(self, category: OpCodeCategory | None = None) -> list[OpCode]:
         """List all op-codes, optionally filtered by category."""
         opcodes = list(self._opcodes.values())
         if category:

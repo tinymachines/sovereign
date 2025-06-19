@@ -5,60 +5,57 @@ Uses Lark for grammar definition and parsing of assembly programs
 into abstract syntax trees.
 """
 
-from lark import Lark, Transformer, Token
-from typing import List, Optional, Union, Any
-from dataclasses import dataclass
+
+from lark import Lark, Transformer
 
 from .ast_nodes import (
-    Program,
+    Address,
+    Immediate,
     Instruction,
     Label,
-    Operand,
-    Register,
-    Immediate,
-    Address,
-    StringLiteral,
     LabelRef,
+    Program,
+    Register,
+    StringLiteral,
 )
-
 
 # Grammar definition for PROJECT SOVEREIGN assembly
 SOVEREIGN_GRAMMAR = """
     start: program
 
-    program: statement*
+    program: (statement NEWLINE?)*
 
-    statement: instruction 
-             | label
-    
+    statement: label
+             | instruction
+
     instruction: opcode operand*
-    
+
     opcode: WORD
-    
-    operand: register 
-           | immediate 
+
+    operand: REGISTER
+           | immediate
            | address
            | string_literal
            | label_ref
-    
-    register: "r" NUMBER
+
     immediate: "#" SIGNED_NUMBER
     address: "@" HEX_STRING
     string_literal: ESCAPED_STRING
-    label_ref: WORD
-    
-    label: WORD ":"
-    
-    WORD: /[A-Za-z_][A-Za-z0-9_]*/
+    label_ref: LABEL_WORD
+
+    label: LABEL_WORD ":"
+
+    REGISTER: /r[0-9]+/
+    WORD: /[A-Z][A-Z0-9_]*/
+    LABEL_WORD: /(?!r[0-9]+)[a-z_][a-z0-9_]*/
     HEX_STRING: /[a-fA-F0-9]+/
-    
+
     %import common.ESCAPED_STRING
     %import common.SIGNED_NUMBER
     %import common.NUMBER
     %import common.WS
     %import common.NEWLINE
     %ignore WS
-    %ignore NEWLINE
     %ignore /;[^\\n]*/
 """
 
@@ -78,7 +75,7 @@ class SovereignTransformer(Transformer):
                 labels[item.name] = len(instructions)
 
         return Program(instructions=instructions, labels=labels)
-    
+
     def statement(self, items):
         """Transform statement node."""
         return items[0]  # Return the instruction or label
@@ -90,7 +87,7 @@ class SovereignTransformer(Transformer):
         # Ensure operands are properly transformed
         transformed_operands = []
         for operand in operands:
-            if hasattr(operand, 'children') and operand.children:
+            if hasattr(operand, "children") and operand.children:
                 transformed_operands.append(operand.children[0])
             else:
                 transformed_operands.append(operand)
@@ -100,9 +97,10 @@ class SovereignTransformer(Transformer):
         """Transform opcode token."""
         return str(items[0])
 
-    def register(self, items):
-        """Transform register operand."""
-        reg_num = int(str(items[0]))  # First item is the number after 'r'
+    def REGISTER(self, token):
+        """Transform register token."""
+        reg_str = str(token)  # Full register string like 'r5'
+        reg_num = int(reg_str[1:])  # Extract number after 'r'
         return Register(number=reg_num)
 
     def immediate(self, items):
@@ -158,7 +156,7 @@ class SovereignParser:
             parse_tree = self.parser.parse(source)
             result = self.transformer.transform(parse_tree)
             # Extract the Program from the result tree
-            if hasattr(result, 'children') and result.children:
+            if hasattr(result, "children") and result.children:
                 return result.children[0]
             return result
         except Exception as e:
@@ -169,23 +167,23 @@ class SovereignParser:
         # Create a temporary grammar for single instruction
         instruction_grammar = """
             start: instruction
-            
+
             instruction: opcode operand*
-            
+
             opcode: /[A-Z][A-Z0-9]*/
-            
-            operand: register 
-                   | immediate 
+
+            operand: register
+                   | immediate
                    | address
                    | string_literal
                    | label_ref
-            
+
             register: /r[0-9]+/
             immediate: /#-?[0-9]+/
             address: /@[a-fA-F0-9]+/
             string_literal: ESCAPED_STRING
             label_ref: /[a-z_][a-z0-9_]*/
-            
+
             %import common.ESCAPED_STRING
             %import common.WS
             %ignore WS

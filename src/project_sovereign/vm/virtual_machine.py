@@ -6,32 +6,44 @@ memory management, and instruction dispatch.
 """
 
 import logging
-from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass, field
+from typing import Any
 
-from ..core.opcodes import OpCodeRegistry, ExecutionContext, OpCode
 from ..core.ast_nodes import (
-    Program,
-    Instruction,
-    Immediate,
-    Register,
     Address,
-    StringLiteral,
+    Immediate,
+    Instruction,
     LabelRef,
+    Program,
+    Register,
+    StringLiteral,
 )
+from ..core.opcodes import ExecutionContext, OpCodeRegistry
+
+
+@dataclass
+class VMConfig:
+    """Configuration for the virtual machine."""
+
+    max_stack_size: int = 1000
+    max_memory_size: int = 10000
+    max_execution_steps: int = 100000
+    max_call_depth: int = 100
 
 
 @dataclass
 class VMState:
     """Complete state of the virtual machine."""
 
-    data_stack: List[Any] = field(default_factory=list)
-    control_stack: List[Any] = field(default_factory=list)
-    memory: Dict[str, Any] = field(default_factory=dict)
-    registers: Dict[str, Any] = field(default_factory=dict)
+    data_stack: list[Any] = field(default_factory=list)
+    control_stack: list[Any] = field(default_factory=list)
+    memory: dict[str, Any] = field(default_factory=dict)
+    registers: dict[str, Any] = field(default_factory=dict)
     program_counter: int = 0
     running: bool = False
-    error_state: Optional[str] = None
+    error_state: str | None = None
+    execution_steps: int = 0
+    memory_usage: int = 0
 
     def to_execution_context(self) -> ExecutionContext:
         """Convert to execution context for op-codes."""
@@ -53,12 +65,13 @@ class SovereignVM:
     and LLM integration capabilities.
     """
 
-    def __init__(self):
+    def __init__(self, config: VMConfig | None = None):
+        self.config = config or VMConfig()
         self.state = VMState()
         self.opcode_registry = OpCodeRegistry()
         self.logger = logging.getLogger(__name__)
-        self.evolution_history: List[str] = []
-        self.program: Optional[Program] = None
+        self.evolution_history: list[str] = []
+        self.program: Program | None = None
 
     def load_program(self, program: Program) -> None:
         """Load program into VM memory."""
@@ -82,6 +95,9 @@ class SovereignVM:
             while self.state.running and self.state.program_counter < len(
                 program.instructions
             ):
+                # Check execution limits
+                self._check_execution_limit()
+                
                 # Check for HALT before executing
                 instruction = program.instructions[self.state.program_counter]
                 if instruction.opcode == "HALT":
@@ -112,9 +128,7 @@ class SovereignVM:
                 # Get value from register
                 reg_name = str(operand)
                 args.append(self.state.registers.get(reg_name, 0))
-            elif isinstance(operand, Address):
-                args.append(operand.value)
-            elif isinstance(operand, StringLiteral):
+            elif isinstance(operand, Address | StringLiteral):
                 args.append(operand.value)
             elif isinstance(operand, LabelRef):
                 # Resolve label to instruction index
@@ -147,15 +161,51 @@ class SovereignVM:
         # TODO: Implement error-driven evolution
         raise error
 
+    def _check_stack_overflow(self, stack: list[Any], operation: str) -> None:
+        """Check if stack operation would cause overflow."""
+        if len(stack) >= self.config.max_stack_size:
+            raise RuntimeError(
+                f"{operation} would exceed maximum stack size of {self.config.max_stack_size}"
+            )
+
+    def _check_execution_limit(self) -> None:
+        """Check if execution step limit would be exceeded."""
+        self.state.execution_steps += 1
+        if self.state.execution_steps >= self.config.max_execution_steps:
+            raise RuntimeError(
+                f"Execution exceeded maximum steps of {self.config.max_execution_steps}"
+            )
+
+    def _check_call_depth(self) -> None:
+        """Check if call stack depth would be exceeded."""
+        if len(self.state.control_stack) >= self.config.max_call_depth:
+            raise RuntimeError(
+                f"Call depth would exceed maximum of {self.config.max_call_depth}"
+            )
+
+    def _update_memory_usage(self, delta: int = 0) -> None:
+        """Update memory usage tracking."""
+        self.state.memory_usage += delta
+        if self.state.memory_usage > self.config.max_memory_size:
+            raise RuntimeError(
+                f"Memory usage exceeded maximum of {self.config.max_memory_size} bytes"
+            )
+
     def push_data(self, value: Any) -> None:
         """Push value onto data stack."""
+        self._check_stack_overflow(self.state.data_stack, "Data stack push")
         self.state.data_stack.append(value)
+        # Estimate memory usage (simplified)
+        self._update_memory_usage(64 if isinstance(value, str) else 8)
 
     def pop_data(self) -> Any:
         """Pop value from data stack."""
         if not self.state.data_stack:
             raise RuntimeError("Data stack underflow")
-        return self.state.data_stack.pop()
+        value = self.state.data_stack.pop()
+        # Update memory usage
+        self._update_memory_usage(-64 if isinstance(value, str) else -8)
+        return value
 
     def peek_data(self) -> Any:
         """Peek at top of data stack without popping."""
@@ -165,13 +215,18 @@ class SovereignVM:
 
     def push_control(self, value: Any) -> None:
         """Push value onto control stack."""
+        self._check_stack_overflow(self.state.control_stack, "Control stack push")
+        self._check_call_depth()
         self.state.control_stack.append(value)
+        self._update_memory_usage(8)
 
     def pop_control(self) -> Any:
         """Pop value from control stack."""
         if not self.state.control_stack:
             raise RuntimeError("Control stack underflow")
-        return self.state.control_stack.pop()
+        value = self.state.control_stack.pop()
+        self._update_memory_usage(-8)
+        return value
 
     def get_memory(self, address: str) -> Any:
         """Get value from memory."""
@@ -179,6 +234,13 @@ class SovereignVM:
 
     def set_memory(self, address: str, value: Any) -> None:
         """Set value in memory."""
+        # Calculate memory delta
+        old_value = self.state.memory.get(address)
+        old_size = 64 if isinstance(old_value, str) else 8 if old_value is not None else 0
+        new_size = 64 if isinstance(value, str) else 8
+        delta = new_size - old_size
+
+        self._update_memory_usage(delta)
         self.state.memory[address] = value
 
     def halt(self) -> None:
@@ -189,8 +251,9 @@ class SovereignVM:
         """Reset VM to initial state."""
         self.state = VMState()
         self.program = None
+        self.evolution_history.clear()
 
-    def dump_state(self) -> Dict[str, Any]:
+    def dump_state(self) -> dict[str, Any]:
         """Dump current VM state for debugging."""
         return {
             "data_stack": self.state.data_stack.copy(),
@@ -200,4 +263,12 @@ class SovereignVM:
             "program_counter": self.state.program_counter,
             "running": self.state.running,
             "error_state": self.state.error_state,
+            "execution_steps": self.state.execution_steps,
+            "memory_usage": self.state.memory_usage,
+            "config": {
+                "max_stack_size": self.config.max_stack_size,
+                "max_memory_size": self.config.max_memory_size,
+                "max_execution_steps": self.config.max_execution_steps,
+                "max_call_depth": self.config.max_call_depth,
+            },
         }

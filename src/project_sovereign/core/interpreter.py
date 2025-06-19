@@ -6,10 +6,9 @@ Coordinates parsing, execution, and error handling.
 
 import logging
 from pathlib import Path
-from typing import Optional, Union
 
-from .parser import SovereignParser, ParseError
 from ..vm.virtual_machine import SovereignVM
+from .parser import ParseError, SovereignParser
 
 
 class SovereignInterpreter:
@@ -54,7 +53,7 @@ class SovereignInterpreter:
             self.logger.error(f"Runtime error: {e}")
             raise RuntimeError(f"Execution failed: {e}") from e
 
-    def run_file(self, filepath: Union[str, Path]) -> None:
+    def run_file(self, filepath: str | Path) -> None:
         """
         Load and execute a PROJECT SOVEREIGN file.
 

@@ -2,13 +2,14 @@
 Pytest configuration and fixtures for PROJECT SOVEREIGN tests.
 """
 
-import pytest
 from pathlib import Path
 
+import pytest
+
+from project_sovereign.core.interpreter import SovereignInterpreter
+from project_sovereign.core.opcodes import OpCodeRegistry
 from project_sovereign.core.parser import SovereignParser
 from project_sovereign.vm.virtual_machine import SovereignVM
-from project_sovereign.core.opcodes import OpCodeRegistry
-from project_sovereign.core.interpreter import SovereignInterpreter
 
 
 @pytest.fixture
@@ -41,7 +42,7 @@ def sample_program():
     return """
     ; Simple test program
     PUSH #42
-    PUSH #10  
+    PUSH #10
     ADD
     POP
     HALT

@@ -5,21 +5,18 @@ Provides interactive execution, file processing, and debugging
 capabilities for the assembly language.
 """
 
-import asyncio
 import sys
 from pathlib import Path
-from typing import Optional
 
 import click
 from rich.console import Console
+from rich.prompt import Prompt
 from rich.syntax import Syntax
 from rich.table import Table
-from rich.prompt import Prompt
 
-from ..core.parser import SovereignParser, ParseError
-from ..vm.virtual_machine import SovereignVM
 from ..core.interpreter import SovereignInterpreter
-
+from ..core.parser import ParseError, SovereignParser
+from ..vm.virtual_machine import SovereignVM
 
 console = Console()
 
@@ -93,7 +90,7 @@ def repl():
 
             if line.lower() in ("exit", "quit"):
                 break
-            elif line.lower() == "help":
+            if line.lower() == "help":
                 show_repl_help()
             elif line.lower() == "state":
                 display_vm_state(interpreter.vm)
@@ -134,7 +131,7 @@ def validate(source_file: Path):
 @cli.command()
 def opcodes():
     """List all available op-codes."""
-    from ..core.opcodes import OpCodeRegistry, OpCodeCategory
+    from ..core.opcodes import OpCodeCategory, OpCodeRegistry
 
     registry = OpCodeRegistry()
 
@@ -176,14 +173,14 @@ def show_repl_help():
     help_text = """
 [bold blue]REPL Commands:[/bold blue]
   help    - Show this help
-  state   - Display VM state  
+  state   - Display VM state
   reset   - Reset VM state
   exit    - Exit REPL
 
 [bold blue]Instructions:[/bold blue]
   Enter any PROJECT SOVEREIGN instruction to execute immediately
   Examples: PUSH #42, ADD, POP, HALT
-  
+
 [bold blue]Op-codes:[/bold blue]
   Run 'sovereign opcodes' for complete list
 """

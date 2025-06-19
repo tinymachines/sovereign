@@ -3,8 +3,6 @@ Tests for PROJECT SOVEREIGN virtual machine.
 """
 
 import pytest
-from project_sovereign.vm.virtual_machine import SovereignVM, VMState
-from project_sovereign.core.ast_nodes import Program, Instruction, Immediate
 
 
 class TestSovereignVM:

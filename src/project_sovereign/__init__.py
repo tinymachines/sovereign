@@ -10,14 +10,14 @@ __version__ = "0.1.0"
 __author__ = "PROJECT SOVEREIGN Team"
 
 from .core.interpreter import SovereignInterpreter
-from .vm.virtual_machine import SovereignVM
-from .core.parser import SovereignParser
 from .core.opcodes import OpCode, OpCodeRegistry
+from .core.parser import SovereignParser
+from .vm.virtual_machine import SovereignVM
 
 __all__ = [
-    "SovereignInterpreter",
-    "SovereignVM",
-    "SovereignParser",
     "OpCode",
     "OpCodeRegistry",
+    "SovereignInterpreter",
+    "SovereignParser",
+    "SovereignVM",
 ]

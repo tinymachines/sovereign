@@ -3,15 +3,15 @@ Tests for PROJECT SOVEREIGN opcodes.
 """
 
 import pytest
+
 from project_sovereign.core.opcodes import (
-    OpCodeRegistry,
-    OpCodeCategory,
-    ExecutionContext,
-    PushOp,
-    PopOp,
     AddOp,
-    SubOp,
     DupOp,
+    ExecutionContext,
+    OpCodeCategory,
+    PopOp,
+    PushOp,
+    SubOp,
     SwapOp,
 )
 
