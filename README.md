@@ -9,6 +9,12 @@ An assembly-like agentic programming language that integrates traditional assemb
 - **Phase 3**: CLI/UX Development 🚧 IN PROGRESS
 - **Phase 4**: Advanced Features 📋 PLANNED
 
+**Latest Updates** (2025-06-20):
+- ✅ Fixed test lockup issues in RuntimeAdapter tests
+- ✅ Resolved linting and formatting issues
+- ✅ Enhanced development workflow with reliable test suite
+- ✅ Improved async event loop handling with proper timeouts
+
 ## ✨ Features
 
 - **Assembly-like syntax** with modern programming constructs
@@ -81,19 +87,44 @@ STORE "fixed_code"
 HALT
 ```
 
-## Development
+## 🛠️ Development
+
+### Quick Development Setup
+
+```bash
+# Automated setup script
+./scripts/dev-setup.sh
+
+# Manual setup alternative
+source .venv/bin/activate
+uv pip install -e ".[dev]"
+```
 
 ### Running Tests
 
 ```bash
-# Run all tests
+# Run all tests with convenience script
+./scripts/run-tests.sh
+
+# Run all tests with nox
 nox -s tests
 
 # Run specific test file
-pytest tests/unit/test_new_instruction.py
+pytest tests/unit/test_config.py
 
 # Run with coverage
 nox -s coverage
+```
+
+### Running Examples
+
+```bash
+# Run all examples
+./scripts/run-examples.sh
+
+# Run specific example
+./scripts/run-examples.sh hello
+sovereign run examples/hello.sov
 ```
 
 ### Code Quality
@@ -168,12 +199,38 @@ project-sovereign/
 - **Learning System**: Tracks fix success rates over time
 - **Model Selection**: Chooses optimal model for each task
 
+## 🔧 Troubleshooting
+
+### Common Issues
+
+**Test lockups or hanging**: Fixed as of 2025-06-20. If you encounter test timeouts:
+```bash
+# Should complete quickly now
+pytest tests/unit/test_llm_integration.py::TestRuntimeAdapter::test_initialize -v
+```
+
+**Environment variable configuration**: Tests now respect `OLLAMA_MODEL` environment variable:
+```bash
+export OLLAMA_MODEL=codellama:7b  # or your preferred model
+pytest tests/
+```
+
+**Import/formatting issues**: Use the development scripts:
+```bash
+./scripts/quality-check.sh  # Runs formatting, linting, and type checking
+```
+
+### Bug Reports
+
+Known issues and their resolutions are documented in [docs/bugs/](docs/bugs/).
+
 ## 📚 Documentation
 
 - [Phase 1 Status](docs/PHASE-I-STATUS.md) - Core infrastructure
-- [Phase 2 Status](docs/PHASE-II-STATUS.md) - LLM integration
+- [Phase 2 Status](docs/PHASE-II-STATUS.md) - LLM integration  
 - [Development Plans](docs/development/) - Detailed phase documentation
 - [Language Reference](docs/reference/) - Syntax and opcodes
+- [Bug Reports](docs/bugs/) - Known issues and fixes
 
 ## 🤝 Contributing
 
