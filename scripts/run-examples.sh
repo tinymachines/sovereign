@@ -31,7 +31,7 @@ run_example() {
     echo "----------------------------"
     
     if [[ -f "$example_file" ]]; then
-        python -m project_sovereign "$example_file" || {
+        python -m project_sovereign run "$example_file" || {
             echo -e "${RED}❌ Failed to run $example_file${NC}"
             return 1
         }
@@ -44,16 +44,10 @@ run_example() {
 # Run specific example or all examples
 case "${1:-all}" in
     hello)
-        run_example "examples/hello_world.sov"
+        run_example "examples/hello.sov"
         ;;
-    math)
-        run_example "examples/math_operations.sov"
-        ;;
-    ai)
-        run_example "examples/ai_integration.sov"
-        ;;
-    control)
-        run_example "examples/control_flow.sov"
+    simple)
+        run_example "examples/simple.sov"
         ;;
     list)
         echo -e "${BLUE}Available examples:${NC}"
@@ -90,7 +84,7 @@ case "${1:-all}" in
             run_example "$1"
         else
             echo -e "${RED}Unknown example or file not found: $1${NC}"
-            echo "Usage: $0 [hello|math|ai|control|list|all|corpus|<file.sov>]"
+            echo "Usage: $0 [hello|simple|list|all|corpus|<file.sov>]"
             exit 1
         fi
         ;;
