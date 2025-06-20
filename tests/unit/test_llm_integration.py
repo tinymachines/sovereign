@@ -443,7 +443,24 @@ class TestRuntimeAdapter:
 
     def test_initialize(self, adapter):
         """Test adapter initialization."""
-        with patch("threading.Thread.start"):
+        # Mock the event loop and thread
+        mock_loop = MagicMock()
+        mock_loop.is_running.return_value = True
+        
+        # Mock future for async_initialize
+        mock_future = MagicMock()
+        mock_future.result.return_value = None
+        
+        # Mock the async initialization to prevent coroutine warning
+        async def mock_async_init():
+            return None
+        
+        with (
+            patch("threading.Thread.start"),
+            patch("asyncio.run_coroutine_threadsafe", return_value=mock_future),
+            patch.object(adapter, "_loop", mock_loop),
+            patch.object(adapter, "_async_initialize", side_effect=mock_async_init)
+        ):
             adapter.initialize()
 
             assert adapter._initialized is True

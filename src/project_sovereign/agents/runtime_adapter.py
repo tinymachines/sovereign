@@ -8,6 +8,7 @@ with the synchronous VM execution model.
 import asyncio
 import logging
 import threading
+import time
 from concurrent.futures import ThreadPoolExecutor
 from typing import Any
 
@@ -46,9 +47,14 @@ class LLMRuntimeAdapter:
         self._thread = threading.Thread(target=self._start_event_loop, daemon=True)
         self._thread.start()
 
-        # Wait for loop to start
-        while self._loop is None or not self._loop.is_running():
-            pass
+        # Wait for loop to start with timeout
+        timeout = 5.0  # 5 second timeout
+        start_time = time.time()
+        while (self._loop is None or not self._loop.is_running()) and (time.time() - start_time) < timeout:
+            time.sleep(0.01)  # Small sleep to avoid busy-waiting
+        
+        if self._loop is None or not self._loop.is_running():
+            raise RuntimeError("Failed to start event loop within timeout")
 
         # Initialize async components
         future = asyncio.run_coroutine_threadsafe(self._async_initialize(), self._loop)
