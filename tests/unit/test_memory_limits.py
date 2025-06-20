@@ -57,7 +57,9 @@ class TestMemoryLimits:
         vm.push_control(200)
 
         # 3rd push should fail
-        with pytest.raises(RuntimeError, match="Control stack push would exceed maximum"):
+        with pytest.raises(
+            RuntimeError, match="Control stack push would exceed maximum"
+        ):
             vm.push_control(300)
 
     def test_call_depth_limit(self):
@@ -81,7 +83,7 @@ class TestMemoryLimits:
         # Add some values to track usage
         vm.set_memory("addr1", 42)  # 8 bytes
         vm.set_memory("addr2", "small")  # 64 bytes
-        
+
         assert vm.state.memory_usage == 72  # 8 + 64
 
         # Update existing memory should adjust usage

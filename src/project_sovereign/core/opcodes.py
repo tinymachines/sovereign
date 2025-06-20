@@ -562,8 +562,26 @@ class LLMGenOp(OpCode):
 
     def execute(self, context: ExecutionContext, prompt: str) -> None:
         """Generate code using LLM."""
-        # TODO: Implement LLM generation
-        pass
+        from ..agents.runtime_adapter import get_llm_runtime
+
+        try:
+            # Get LLM runtime
+            runtime = get_llm_runtime()
+
+            # Generate code based on prompt
+            generated_code = runtime.generate_code(
+                prompt=prompt,
+                language="assembly",
+                timeout=30.0,
+            )
+
+            # Push generated code onto data stack
+            context.data_stack.append(generated_code)
+
+        except Exception as e:
+            # Push error message onto stack
+            context.data_stack.append(f"LLMGEN_ERROR: {e!s}")
+            context.error_state = str(e)
 
     def validate_args(self, *args: Any) -> bool:
         return len(args) == 1 and isinstance(args[0], str)
@@ -577,8 +595,50 @@ class EvolveOp(OpCode):
 
     def execute(self, context: ExecutionContext, error_context: str) -> None:
         """Evolve code based on error context."""
-        # TODO: Implement evolution mechanism
-        pass
+        from ..agents.runtime_adapter import get_llm_runtime
+
+        try:
+            # Get LLM runtime
+            runtime = get_llm_runtime()
+
+            # Get code context from stack if available
+            code_context = ""
+            if context.data_stack:
+                code_context = str(context.data_stack[-1])
+
+            # Attempt evolution
+            result = runtime.evolve_code(
+                code=code_context,
+                error_context=error_context,
+                timeout=60.0,
+            )
+
+            if result.success and result.fixed_code:
+                # Push fixed code onto stack
+                context.data_stack.append(result.fixed_code)
+                # Also store evolution metadata in memory
+                context.memory["_last_evolution"] = {
+                    "success": True,
+                    "original_error": result.original_error,
+                    "fix": result.suggested_fix,
+                    "confidence": result.confidence,
+                    "model": result.model_used,
+                }
+            else:
+                # Push error message
+                context.data_stack.append("EVOLVE_FAILED: Could not fix error")
+                context.memory["_last_evolution"] = {
+                    "success": False,
+                    "original_error": result.original_error,
+                    "category": result.error_category.value
+                    if hasattr(result.error_category, "value")
+                    else str(result.error_category),
+                }
+
+        except Exception as e:
+            # Push error message onto stack
+            context.data_stack.append(f"EVOLVE_ERROR: {e!s}")
+            context.error_state = str(e)
 
     def validate_args(self, *args: Any) -> bool:
         return len(args) == 1

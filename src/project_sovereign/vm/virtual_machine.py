@@ -97,7 +97,7 @@ class SovereignVM:
             ):
                 # Check execution limits
                 self._check_execution_limit()
-                
+
                 # Check for HALT before executing
                 instruction = program.instructions[self.state.program_counter]
                 if instruction.opcode == "HALT":
@@ -236,7 +236,9 @@ class SovereignVM:
         """Set value in memory."""
         # Calculate memory delta
         old_value = self.state.memory.get(address)
-        old_size = 64 if isinstance(old_value, str) else 8 if old_value is not None else 0
+        old_size = (
+            64 if isinstance(old_value, str) else 8 if old_value is not None else 0
+        )
         new_size = 64 if isinstance(value, str) else 8
         delta = new_size - old_size
 

@@ -5,7 +5,6 @@ Uses Lark for grammar definition and parsing of assembly programs
 into abstract syntax trees.
 """
 
-
 from lark import Lark, Transformer
 
 from .ast_nodes import (
