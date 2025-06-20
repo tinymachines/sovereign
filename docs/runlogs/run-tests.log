@@ -1,0 +1,186 @@
+[0;33m🧪 Running PROJECT SOVEREIGN Tests[0m
+================================
+[0;32mRunning all tests...[0m
+============================= test session starts ==============================
+platform linux -- Python 3.13.3, pytest-8.4.1, pluggy-1.6.0 -- /home/bisenbek/projects/sovereign/.venv/bin/python3
+cachedir: .pytest_cache
+hypothesis profile 'default'
+benchmark: 5.1.0 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /home/bisenbek/projects/sovereign
+configfile: pyproject.toml
+plugins: cov-6.2.1, hypothesis-6.135.12, benchmark-5.1.0, asyncio-1.0.0
+asyncio: mode=Mode.STRICT, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 86 items
+
+tests/integration/test_llm_opcodes.py::TestLLMGenOpcode::test_llmgen_basic PASSED [  1%]
+tests/integration/test_llm_opcodes.py::TestLLMGenOpcode::test_llmgen_error_handling PASSED [  2%]
+tests/integration/test_llm_opcodes.py::TestLLMGenOpcode::test_llmgen_with_memory_storage PASSED [  3%]
+tests/integration/test_llm_opcodes.py::TestEvolveOpcode::test_evolve_basic PASSED [  4%]
+tests/integration/test_llm_opcodes.py::TestEvolveOpcode::test_evolve_failure PASSED [  5%]
+tests/integration/test_llm_opcodes.py::TestEvolveOpcode::test_evolve_empty_stack PASSED [  6%]
+tests/integration/test_llm_opcodes.py::TestLLMIntegrationScenarios::test_code_generation_and_evolution PASSED [  8%]
+tests/integration/test_llm_opcodes.py::TestLLMIntegrationScenarios::test_error_driven_evolution_workflow PASSED [  9%]
+tests/integration/test_llm_opcodes.py::TestLLMIntegrationScenarios::test_chained_llm_operations PASSED [ 10%]
+tests/integration/test_programs.py::TestPrograms::test_simple_arithmetic PASSED [ 11%]
+tests/integration/test_programs.py::TestPrograms::test_stack_manipulation PASSED [ 12%]
+tests/integration/test_programs.py::TestPrograms::test_memory_operations PASSED [ 13%]
+tests/integration/test_programs.py::TestPrograms::test_control_flow_jump PASSED [ 15%]
+tests/integration/test_programs.py::TestPrograms::test_function_calls PASSED [ 16%]
+tests/integration/test_programs.py::TestPrograms::test_conditional_jumps PASSED [ 17%]
+tests/integration/test_programs.py::TestPrograms::test_complex_arithmetic PASSED [ 18%]
+tests/integration/test_programs.py::test_parametrized_programs[\n    PUSH #12\n    PUSH #10\n    AND\n    HALT\n    -expected_stack0] PASSED [ 19%]
+tests/integration/test_programs.py::test_parametrized_programs[\n    PUSH #20\n    PUSH #4\n    DIV\n    HALT\n    -expected_stack1] PASSED [ 20%]
+tests/integration/test_programs.py::test_parametrized_programs[\n    PUSH #1\n    PUSH #2\n    PUSH #3\n    CLEAR\n    PUSH #42\n    HALT\n    -expected_stack2] PASSED [ 22%]
+tests/unit/test_config.py::TestConfig::test_default_values PASSED        [ 23%]
+tests/unit/test_config.py::TestConfig::test_environment_values PASSED    [ 24%]
+tests/unit/test_config.py::TestConfig::test_debug_flag_variations PASSED [ 25%]
+tests/unit/test_config.py::TestConfig::test_debug_flag_yes PASSED        [ 26%]
+tests/unit/test_config.py::TestConfig::test_debug_flag_false PASSED      [ 27%]
+tests/unit/test_config.py::TestConfig::test_invalid_numeric_value PASSED [ 29%]
+tests/unit/test_config.py::TestConfig::test_load_environment_with_env_file PASSED [ 30%]
+tests/unit/test_config.py::TestConfig::test_load_environment_without_env_file PASSED [ 31%]
+tests/unit/test_llm_integration.py::TestOllamaClient::test_health_check_success PASSED [ 32%]
+tests/unit/test_llm_integration.py::TestOllamaClient::test_health_check_failure PASSED [ 33%]
+tests/unit/test_llm_integration.py::TestOllamaClient::test_list_models PASSED [ 34%]
+tests/unit/test_llm_integration.py::TestOllamaClient::test_generate_single_response PASSED [ 36%]
+tests/unit/test_llm_integration.py::TestOllamaClient::test_generate_with_retry PASSED [ 37%]
+tests/unit/test_llm_integration.py::TestOllamaClient::test_code_generate PASSED [ 38%]
+tests/unit/test_llm_integration.py::TestOllamaClient::test_analyze_error PASSED [ 39%]
+tests/unit/test_llm_integration.py::TestModelManager::test_initialize PASSED [ 40%]
+tests/unit/test_llm_integration.py::TestModelManager::test_select_model_by_capability PASSED [ 41%]
+tests/unit/test_llm_integration.py::TestModelManager::test_select_model_prefer_fast PASSED [ 43%]
+tests/unit/test_llm_integration.py::TestModelManager::test_get_fallback_chain PASSED [ 44%]
+tests/unit/test_llm_integration.py::TestModelManager::test_test_model PASSED [ 45%]
+tests/unit/test_llm_integration.py::TestEvolutionEngine::test_categorize_error PASSED [ 46%]
+tests/unit/test_llm_integration.py::TestEvolutionEngine::test_error_pattern_matching PASSED [ 47%]
+tests/unit/test_llm_integration.py::TestEvolutionEngine::test_error_pattern_similarity PASSED [ 48%]
+tests/unit/test_llm_integration.py::TestEvolutionEngine::test_evolve_success FAILED [ 50%]
+tests/unit/test_llm_integration.py::TestEvolutionEngine::test_evolve_failure PASSED [ 51%]
+tests/unit/test_llm_integration.py::TestEvolutionEngine::test_evolution_history PASSED [ 52%]
+tests/unit/test_llm_integration.py::TestEvolutionEngine::test_pattern_export_import PASSED [ 53%]
+tests/unit/test_llm_integration.py::TestRuntimeAdapter::test_initialize PASSED [ 54%]
+tests/unit/test_llm_integration.py::TestRuntimeAdapter::test_generate_code_sync PASSED [ 55%]
+tests/unit/test_llm_integration.py::TestRuntimeAdapter::test_evolve_code_sync PASSED [ 56%]
+tests/unit/test_memory_limits.py::TestMemoryLimits::test_vm_config_defaults PASSED [ 58%]
+tests/unit/test_memory_limits.py::TestMemoryLimits::test_vm_config_custom PASSED [ 59%]
+tests/unit/test_memory_limits.py::TestMemoryLimits::test_data_stack_overflow PASSED [ 60%]
+tests/unit/test_memory_limits.py::TestMemoryLimits::test_control_stack_overflow PASSED [ 61%]
+tests/unit/test_memory_limits.py::TestMemoryLimits::test_call_depth_limit PASSED [ 62%]
+tests/unit/test_memory_limits.py::TestMemoryLimits::test_memory_usage_tracking PASSED [ 63%]
+tests/unit/test_memory_limits.py::TestMemoryLimits::test_execution_step_limit PASSED [ 65%]
+tests/unit/test_memory_limits.py::TestMemoryLimits::test_memory_cleanup_on_pop PASSED [ 66%]
+tests/unit/test_memory_limits.py::TestMemoryLimits::test_dump_state_includes_limits PASSED [ 67%]
+tests/unit/test_memory_limits.py::TestMemoryLimits::test_reset_clears_usage_counters PASSED [ 68%]
+tests/unit/test_opcodes.py::TestOpcodes::test_push_op PASSED             [ 69%]
+tests/unit/test_opcodes.py::TestOpcodes::test_pop_op PASSED              [ 70%]
+tests/unit/test_opcodes.py::TestOpcodes::test_pop_empty_stack PASSED     [ 72%]
+tests/unit/test_opcodes.py::TestOpcodes::test_add_op PASSED              [ 73%]
+tests/unit/test_opcodes.py::TestOpcodes::test_sub_op PASSED              [ 74%]
+tests/unit/test_opcodes.py::TestOpcodes::test_dup_op PASSED              [ 75%]
+tests/unit/test_opcodes.py::TestOpcodes::test_swap_op PASSED             [ 76%]
+tests/unit/test_opcodes.py::TestOpCodeRegistry::test_registry_initialization PASSED [ 77%]
+tests/unit/test_opcodes.py::TestOpCodeRegistry::test_get_opcode PASSED   [ 79%]
+tests/unit/test_opcodes.py::TestOpCodeRegistry::test_list_by_category PASSED [ 80%]
+tests/unit/test_parser.py::TestSovereignParser::test_parse_simple_instruction PASSED [ 81%]
+tests/unit/test_parser.py::TestSovereignParser::test_parse_multiple_instructions PASSED [ 82%]
+tests/unit/test_parser.py::TestSovereignParser::test_parse_with_labels PASSED [ 83%]
+tests/unit/test_parser.py::TestSovereignParser::test_parse_registers PASSED [ 84%]
+tests/unit/test_parser.py::TestSovereignParser::test_invalid_syntax_raises_error PASSED [ 86%]
+tests/unit/test_parser.py::TestSovereignParser::test_validate_syntax PASSED [ 87%]
+tests/unit/test_parser.py::test_parse_instruction_types[PUSH #1\nPOP-expected_opcodes0] PASSED [ 88%]
+tests/unit/test_parser.py::test_parse_instruction_types[ADD\nSUB\nMUL-expected_opcodes1] PASSED [ 89%]
+tests/unit/test_parser.py::test_parse_instruction_types[JMP loop\nloop:\nHALT-expected_opcodes2] PASSED [ 90%]
+tests/unit/test_vm.py::TestSovereignVM::test_vm_initialization PASSED    [ 91%]
+tests/unit/test_vm.py::TestSovereignVM::test_stack_operations PASSED     [ 93%]
+tests/unit/test_vm.py::TestSovereignVM::test_stack_underflow_error PASSED [ 94%]
+tests/unit/test_vm.py::TestSovereignVM::test_memory_operations PASSED    [ 95%]
+tests/unit/test_vm.py::TestSovereignVM::test_vm_reset PASSED             [ 96%]
+tests/unit/test_vm.py::TestSovereignVM::test_dump_state PASSED           [ 97%]
+tests/unit/test_vm.py::TestSovereignVM::test_halt_operation PASSED       [ 98%]
+tests/unit/test_vm.py::test_error_handling PASSED                        [100%]
+
+=================================== FAILURES ===================================
+___________________ TestEvolutionEngine.test_evolve_success ____________________
+
+self = <test_llm_integration.TestEvolutionEngine object at 0x75e5f8114c30>
+engine = <project_sovereign.agents.evolution_engine.EvolutionEngine object at 0x75e5f810f110>
+
+    @pytest.mark.asyncio
+    async def test_evolve_success(self, engine):
+        """Test successful code evolution."""
+        # Mock model selection
+        engine.model_manager.select_model = AsyncMock(
+            return_value=ModelInfo(
+                name="qwen2.5-coder",
+                size="7b",
+                capabilities={ModelCapability.CODE_GENERATION},
+            )
+        )
+    
+        # Mock error analysis
+        engine.client.analyze_error = AsyncMock(
+            return_value={
+                "error_type": "syntax",
+                "root_cause": "Missing HALT",
+                "fix_strategy": "Add HALT at end",
+            }
+        )
+    
+        # Mock code generation
+        engine.client.code_generate = AsyncMock(return_value="PUSH #42\nHALT")
+    
+        # Mock validation
+        with patch.object(
+            engine, "_validate_fix", new_callable=AsyncMock
+        ) as mock_validate:
+            mock_validate.return_value = True
+    
+            result = await engine.evolve(
+                code="PUSH #42",
+                error_context="Program did not halt",
+            )
+    
+            assert result.success is True
+            assert result.fixed_code == "PUSH #42\nHALT"
+>           assert result.error_category == ErrorCategory.RUNTIME_ERROR
+E           AssertionError: assert <ErrorCategory.UNKNOWN: 'unknown'> == <ErrorCategory.RUNTIME_ERROR: 'runtime_error'>
+E            +  where <ErrorCategory.UNKNOWN: 'unknown'> = EvolutionResult(success=True, original_error='Program did not halt', suggested_fix='Add HALT at end', fixed_code='PUSH #42\nHALT', error_category=<ErrorCategory.UNKNOWN: 'unknown'>, confidence=0.8, execution_time=0.0001689060591161251, model_used='qwen2.5-coder', metadata={'analysis': {'error_type': 'syntax', 'root_cause': 'Missing HALT', 'fix_strategy': 'Add HALT at end'}, 'attempt': 1}).error_category
+E            +  and   <ErrorCategory.RUNTIME_ERROR: 'runtime_error'> = ErrorCategory.RUNTIME_ERROR
+
+tests/unit/test_llm_integration.py:378: AssertionError
+=============================== warnings summary ===============================
+tests/unit/test_llm_integration.py::TestRuntimeAdapter::test_evolve_code_sync
+  /home/bisenbek/.local/share/uv/python/cpython-3.13.3-linux-x86_64-gnu/lib/python3.13/unittest/mock.py:2247: RuntimeWarning: coroutine 'AsyncMockMixin._execute_mock_call' was never awaited
+    def __init__(self, name, parent):
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.13.3-final-0 ________________
+
+Name                                               Stmts   Miss  Cover   Missing
+--------------------------------------------------------------------------------
+src/project_sovereign/__init__.py                      7      0   100%
+src/project_sovereign/__main__.py                      3      3     0%   8-14
+src/project_sovereign/agents/__init__.py               4      0   100%
+src/project_sovereign/agents/evolution_engine.py     174     38    78%   64, 105, 114-116, 220-235, 279-286, 301-314, 324-335, 350-360, 401-402
+src/project_sovereign/agents/model_manager.py        103     26    75%   136, 166-169, 173-175, 185, 188-189, 203-205, 231-244, 270-275, 289-291
+src/project_sovereign/agents/ollama_client.py        145     43    70%   65-66, 74, 78-85, 92-95, 119-123, 155, 158, 183-185, 188-189, 197, 208-234, 265, 307, 312-314
+src/project_sovereign/agents/runtime_adapter.py      122     68    44%   37-39, 44, 54, 57, 68-81, 87-100, 104-105, 115, 124-129, 133-144, 159, 168-173, 182-197, 201-212, 220-231, 235-236, 240-242, 252-254
+src/project_sovereign/cli/__init__.py                  0      0   100%
+src/project_sovereign/cli/main.py                    111    111     0%   8-192
+src/project_sovereign/config.py                       32      0   100%
+src/project_sovereign/core/__init__.py                 4      0   100%
+src/project_sovereign/core/ast_nodes.py               67     15    78%   18, 35, 100, 111-118, 122-126
+src/project_sovereign/core/interpreter.py             40     14    65%   44-46, 68-74, 87-92
+src/project_sovereign/core/opcodes.py                351     68    81%   49, 54, 87, 99, 115, 133-138, 141, 152-154, 157, 168-170, 173, 200, 218, 236, 254, 274, 291-295, 298, 309-313, 316, 327-330, 333, 360, 376-379, 382, 410, 426, 429, 441, 444, 456, 459, 487, 506, 509, 521, 524, 536, 539, 551, 554, 638-641, 704
+src/project_sovereign/core/parser.py                  89     27    70%   92, 160, 167-219
+src/project_sovereign/vm/__init__.py                   2      0   100%
+src/project_sovereign/vm/virtual_machine.py          141     12    91%   86, 120, 129-130, 138-140, 144, 225-229
+--------------------------------------------------------------------------------
+TOTAL                                               1395    425    70%
+Coverage HTML written to dir htmlcov
+=========================== short test summary info ============================
+FAILED tests/unit/test_llm_integration.py::TestEvolutionEngine::test_evolve_success
+=================== 1 failed, 85 passed, 1 warning in 1.73s ====================

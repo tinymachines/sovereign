@@ -1,0 +1,15 @@
+[0;34m🚀 Running PROJECT SOVEREIGN Examples[0m
+====================================
+[0;32mRunning all examples...[0m
+
+[0;32mRunning: examples/hello.sov[0m
+----------------------------
+Executing program...
+Execution completed successfully
+
+[0;32mRunning: examples/simple.sov[0m
+----------------------------
+Executing program...
+Execution completed successfully
+
+[0;32m✅ Examples completed![0m

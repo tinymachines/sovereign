@@ -1,0 +1,446 @@
+[0;34m🔍 Running Code Quality Checks[0m
+==============================
+
+[0;33mRunning Code formatting...[0m
+Would reformat: src/project_sovereign/agents/runtime_adapter.py
+Would reformat: tests/unit/test_llm_integration.py
+2 files would be reformatted, 24 files already formatted
+[0;31m✗ Code formatting failed[0m
+
+[0;33mRunning Linting...[0m
+src/project_sovereign/agents/runtime_adapter.py:55:1: W293 [*] Blank line contains whitespace
+   |
+53 |         while (self._loop is None or not self._loop.is_running()) and (time.time() - start_time) < timeout:
+54 |             time.sleep(0.01)  # Small sleep to avoid busy-waiting
+55 |         
+   | ^^^^^^^^ W293
+56 |         if self._loop is None or not self._loop.is_running():
+57 |             raise RuntimeError("Failed to start event loop within timeout")
+   |
+   = help: Remove whitespace from blank line
+
+tests/unit/test_llm_integration.py:449:1: W293 [*] Blank line contains whitespace
+    |
+447 |         mock_loop = MagicMock()
+448 |         mock_loop.is_running.return_value = True
+449 |         
+    | ^^^^^^^^ W293
+450 |         # Mock future for async_initialize
+451 |         mock_future = MagicMock()
+    |
+    = help: Remove whitespace from blank line
+
+tests/unit/test_llm_integration.py:453:1: W293 [*] Blank line contains whitespace
+    |
+451 |         mock_future = MagicMock()
+452 |         mock_future.result.return_value = None
+453 |         
+    | ^^^^^^^^ W293
+454 |         # Mock the async initialization to prevent coroutine warning
+455 |         async def mock_async_init():
+    |
+    = help: Remove whitespace from blank line
+
+tests/unit/test_llm_integration.py:457:1: W293 [*] Blank line contains whitespace
+    |
+455 |         async def mock_async_init():
+456 |             return None
+457 |         
+    | ^^^^^^^^ W293
+458 |         with (
+459 |             patch("threading.Thread.start"),
+    |
+    = help: Remove whitespace from blank line
+
+Found 4 errors.
+[*] 4 fixable with the `--fix` option.
+[0;31m✗ Linting failed[0m
+
+[0;33mRunning Type checking...[0m
+/home/bisenbek/projects/sovereign/src/project_sovereign/agents/evolution_engine.py
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/evolution_engine.py:82:5 - error: Type of "metadata" is partially unknown
+    Type of "metadata" is "dict[Unknown, Unknown]" (reportUnknownVariableType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/evolution_engine.py:89:5 - error: Type of "attempts" is partially unknown
+    Type of "attempts" is "list[Unknown]" (reportUnknownVariableType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/evolution_engine.py:90:5 - error: Type of "error_patterns" is partially unknown
+    Type of "error_patterns" is "list[Unknown]" (reportUnknownVariableType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/evolution_engine.py:116:17 - error: Type of "append" is partially unknown
+    Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/evolution_engine.py:118:13 - error: Argument type is partially unknown
+    Argument corresponds to parameter "iterable" in function "sorted"
+    Argument type is "list[Unknown]" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/evolution_engine.py:304:48 - error: No parameter named "vm" (reportCallIssue)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/evolution_engine.py:357:13 - error: Type of "stats" is unknown (reportUnknownVariableType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/evolution_engine.py:372:13 - error: Type of "append" is partially unknown
+    Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
+/home/bisenbek/projects/sovereign/src/project_sovereign/agents/model_manager.py
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/model_manager.py:36:5 - error: Type of "capabilities" is partially unknown
+    Type of "capabilities" is "set[Unknown]" (reportUnknownVariableType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/model_manager.py:263:21 - error: Type of "append" is partially unknown
+    Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/model_manager.py:266:13 - error: Type of "sort" is partially unknown
+    Type of "sort" is "Overload[(*, key: None = None, reverse: bool = False) -> None, (*, key: (Unknown) -> (SupportsDunderLT[Any] | SupportsDunderGT[Any]), reverse: bool = False) -> None]" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/model_manager.py:267:13 - error: Type of "fallbacks" is partially unknown
+    Type of "fallbacks" is "list[Unknown]" (reportUnknownVariableType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/model_manager.py:267:35 - error: Type of "_" is unknown (reportUnknownVariableType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/model_manager.py:267:38 - error: Type of "name" is unknown (reportUnknownVariableType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/model_manager.py:277:16 - error: Return type, "list[Unknown] | list[str]", is partially unknown (reportUnknownVariableType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/model_manager.py:288:24 - error: Type of "error" is partially unknown
+    Type of "error" is "str | Unknown | None" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/model_manager.py:288:33 - error: Cannot access attribute "error" for class "AsyncIterator[OllamaResponse]"
+    Attribute "error" is unknown (reportAttributeAccessIssue)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/model_manager.py:288:51 - error: Type of "response" is partially unknown
+    Type of "response" is "str | Unknown" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/model_manager.py:288:51 - error: Type of "upper" is partially unknown
+    Type of "upper" is "(() -> str) | Unknown" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/model_manager.py:288:60 - error: Cannot access attribute "response" for class "AsyncIterator[OllamaResponse]"
+    Attribute "response" is unknown (reportAttributeAccessIssue)
+/home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:46:5 - error: Type of "context" is partially unknown
+    Type of "context" is "list[Unknown]" (reportUnknownVariableType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:103:38 - error: "get" is not a known attribute of "None" (reportOptionalMemberAccess)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:115:38 - error: "get" is not a known attribute of "None" (reportOptionalMemberAccess)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:155:13 - error: Argument of type "list[int]" cannot be assigned to parameter "value" of type "str | bool | dict[str, float | int]" in function "__setitem__"
+    Type "list[int]" is not assignable to type "str | bool | dict[str, float | int]"
+      "list[int]" is not assignable to "str"
+      "list[int]" is not assignable to "bool"
+      "list[int]" is not assignable to "dict[str, float | int]" (reportArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:169:42 - error: "post" is not a known attribute of "None" (reportOptionalMemberAccess)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:209:38 - error: "post" is not a known attribute of "None" (reportOptionalMemberAccess)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:264:12 - error: Type of "error" is partially unknown
+    Type of "error" is "str | Unknown | None" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:264:21 - error: Cannot access attribute "error" for class "AsyncIterator[OllamaResponse]"
+    Attribute "error" is unknown (reportAttributeAccessIssue)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:265:59 - error: Type of "error" is partially unknown
+    Type of "error" is "str | Unknown" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:265:68 - error: Cannot access attribute "error" for class "AsyncIterator[OllamaResponse]"
+    Attribute "error" is unknown (reportAttributeAccessIssue)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:268:9 - error: Type of "code" is partially unknown
+    Type of "code" is "str | Unknown" (reportUnknownVariableType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:268:16 - error: Type of "response" is partially unknown
+    Type of "response" is "str | Unknown" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:268:16 - error: Type of "strip" is partially unknown
+    Type of "strip" is "((chars: str | None = None, /) -> str) | Unknown" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:268:25 - error: Cannot access attribute "response" for class "AsyncIterator[OllamaResponse]"
+    Attribute "response" is unknown (reportAttributeAccessIssue)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:271:12 - error: Type of "startswith" is partially unknown
+    Type of "startswith" is "((prefix: str | tuple[str, ...], start: SupportsIndex | None = ..., end: SupportsIndex | None = ..., /) -> bool) | Unknown" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:272:13 - error: Type of "lines" is partially unknown
+    Type of "lines" is "list[str] | Unknown" (reportUnknownVariableType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:272:21 - error: Type of "split" is partially unknown
+    Type of "split" is "((sep: str | None = None, maxsplit: SupportsIndex = -1) -> list[str]) | Unknown" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:274:16 - error: Type of "startswith" is partially unknown
+    Type of "startswith" is "((prefix: str | tuple[str, ...], start: SupportsIndex | None = ..., end: SupportsIndex | None = ..., /) -> bool) | Unknown" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:275:34 - error: Argument type is partially unknown
+    Argument corresponds to parameter "iterable" in function "join"
+    Argument type is "list[str] | Unknown" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:277:16 - error: Return type, "str | Unknown", is partially unknown (reportUnknownVariableType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:306:12 - error: Type of "error" is partially unknown
+    Type of "error" is "str | Unknown | None" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:306:21 - error: Cannot access attribute "error" for class "AsyncIterator[OllamaResponse]"
+    Attribute "error" is unknown (reportAttributeAccessIssue)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:307:58 - error: Type of "error" is partially unknown
+    Type of "error" is "str | Unknown" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:307:67 - error: Cannot access attribute "error" for class "AsyncIterator[OllamaResponse]"
+    Attribute "error" is unknown (reportAttributeAccessIssue)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:311:31 - error: Type of "response" is partially unknown
+    Type of "response" is "str | Unknown" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:311:31 - error: Argument type is partially unknown
+    Argument corresponds to parameter "s" in function "loads"
+    Argument type is "str | Unknown" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/ollama_client.py:311:40 - error: Cannot access attribute "response" for class "AsyncIterator[OllamaResponse]"
+    Attribute "response" is unknown (reportAttributeAccessIssue)
+/home/bisenbek/projects/sovereign/src/project_sovereign/agents/runtime_adapter.py
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/runtime_adapter.py:119:13 - error: Argument of type "AbstractEventLoop | None" cannot be assigned to parameter "loop" of type "AbstractEventLoop" in function "run_coroutine_threadsafe"
+    Type "AbstractEventLoop | None" is not assignable to type "AbstractEventLoop"
+      "None" is not assignable to "AbstractEventLoop" (reportArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/runtime_adapter.py:137:48 - error: "select_model" is not a known attribute of "None" (reportOptionalMemberAccess)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/runtime_adapter.py:162:36 - error: "evolve" is not a known attribute of "None" (reportOptionalMemberAccess)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/runtime_adapter.py:163:13 - error: Argument of type "AbstractEventLoop | None" cannot be assigned to parameter "loop" of type "AbstractEventLoop" in function "run_coroutine_threadsafe"
+    Type "AbstractEventLoop | None" is not assignable to type "AbstractEventLoop"
+      "None" is not assignable to "AbstractEventLoop" (reportArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/runtime_adapter.py:187:13 - error: Argument of type "AbstractEventLoop | None" cannot be assigned to parameter "loop" of type "AbstractEventLoop" in function "run_coroutine_threadsafe"
+    Type "AbstractEventLoop | None" is not assignable to type "AbstractEventLoop"
+      "None" is not assignable to "AbstractEventLoop" (reportArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/runtime_adapter.py:205:48 - error: "select_model" is not a known attribute of "None" (reportOptionalMemberAccess)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/runtime_adapter.py:225:13 - error: Argument of type "AbstractEventLoop | None" cannot be assigned to parameter "loop" of type "AbstractEventLoop" in function "run_coroutine_threadsafe"
+    Type "AbstractEventLoop | None" is not assignable to type "AbstractEventLoop"
+      "None" is not assignable to "AbstractEventLoop" (reportArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/agents/runtime_adapter.py:235:44 - error: "get_available_models" is not a known attribute of "None" (reportOptionalMemberAccess)
+/home/bisenbek/projects/sovereign/src/project_sovereign/core/ast_nodes.py
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/ast_nodes.py:116:21 - error: Type of "append" is partially unknown
+    Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/ast_nodes.py:117:13 - error: Type of "append" is partially unknown
+    Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/ast_nodes.py:118:26 - error: Argument type is partially unknown
+    Argument corresponds to parameter "iterable" in function "join"
+    Argument type is "list[Unknown]" (reportUnknownArgumentType)
+/home/bisenbek/projects/sovereign/src/project_sovereign/core/interpreter.py
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/interpreter.py:94:9 - error: Return type, "dict[Unknown, Unknown]", is partially unknown (reportUnknownParameterType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/interpreter.py:94:31 - error: Expected type arguments for generic class "dict" (reportMissingTypeArgument)
+/home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:64:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Positional parameter count mismatch; base method has 3, but override has 3
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:79:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:96:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:112:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:131:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:150:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:166:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:182:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:197:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:215:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:233:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:251:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:271:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:289:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:307:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:325:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:343:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Positional parameter count mismatch; base method has 3, but override has 3
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:357:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Positional parameter count mismatch; base method has 3, but override has 3
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:374:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Positional parameter count mismatch; base method has 3, but override has 3
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:391:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Positional parameter count mismatch; base method has 3, but override has 3
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:407:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:423:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Positional parameter count mismatch; base method has 3, but override has 3
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:438:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:453:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:469:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Positional parameter count mismatch; base method has 3, but override has 3
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:484:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Positional parameter count mismatch; base method has 3, but override has 3
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:501:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Positional parameter count mismatch; base method has 3, but override has 4
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:518:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:533:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:548:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:563:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Positional parameter count mismatch; base method has 3, but override has 3
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/opcodes.py:596:9 - error: Method "execute" overrides class "OpCode" in an incompatible manner
+    Positional parameter count mismatch; base method has 3, but override has 3
+    Parameter "args" is missing in override (reportIncompatibleMethodOverride)
+/home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:62:28 - error: Expected type arguments for generic class "Transformer" (reportMissingTypeArgument)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:65:23 - error: Type of parameter "items" is unknown (reportUnknownParameterType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:65:23 - error: Type annotation is missing for parameter "items" (reportMissingParameterType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:70:13 - error: Type of "item" is unknown (reportUnknownVariableType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:72:17 - error: Type of "append" is partially unknown
+    Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:74:41 - error: Argument type is partially unknown
+    Argument corresponds to parameter "obj" in function "len"
+    Argument type is "list[Unknown]" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:76:37 - error: Argument type is partially unknown
+    Argument corresponds to parameter "instructions" in function "__init__"
+    Argument type is "list[Unknown]" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:76:58 - error: Argument type is partially unknown
+    Argument corresponds to parameter "labels" in function "__init__"
+    Argument type is "dict[Unknown, Unknown]" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:78:9 - error: Return type is unknown (reportUnknownParameterType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:78:25 - error: Type of parameter "items" is unknown (reportUnknownParameterType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:78:25 - error: Type annotation is missing for parameter "items" (reportMissingParameterType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:80:16 - error: Return type is unknown (reportUnknownVariableType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:82:27 - error: Type of parameter "items" is unknown (reportUnknownParameterType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:82:27 - error: Type annotation is missing for parameter "items" (reportMissingParameterType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:84:22 - error: Argument type is unknown
+    Argument corresponds to parameter "object" in function "__new__" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:85:9 - error: Type of "operands" is partially unknown
+    Type of "operands" is "Unknown | list[Unknown]" (reportUnknownVariableType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:85:37 - error: Argument type is unknown
+    Argument corresponds to parameter "obj" in function "len" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:88:13 - error: Type of "operand" is unknown (reportUnknownVariableType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:89:24 - error: Argument type is unknown
+    Argument corresponds to parameter "obj" in function "hasattr" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:89:49 - error: Type of "children" is unknown (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:90:17 - error: Type of "append" is partially unknown
+    Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:90:45 - error: Type of "children" is unknown (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:90:45 - error: Argument type is unknown
+    Argument corresponds to parameter "object" in function "append" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:92:17 - error: Type of "append" is partially unknown
+    Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:92:45 - error: Argument type is unknown
+    Argument corresponds to parameter "object" in function "append" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:93:52 - error: Argument type is partially unknown
+    Argument corresponds to parameter "operands" in function "__init__"
+    Argument type is "list[Unknown]" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:95:22 - error: Type of parameter "items" is unknown (reportUnknownParameterType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:95:22 - error: Type annotation is missing for parameter "items" (reportMissingParameterType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:97:20 - error: Argument type is unknown
+    Argument corresponds to parameter "object" in function "__new__" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:99:24 - error: Type of parameter "token" is unknown (reportUnknownParameterType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:99:24 - error: Type annotation is missing for parameter "token" (reportMissingParameterType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:101:23 - error: Argument type is unknown
+    Argument corresponds to parameter "object" in function "__new__" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:105:25 - error: Type of parameter "items" is unknown (reportUnknownParameterType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:105:25 - error: Type annotation is missing for parameter "items" (reportMissingParameterType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:107:25 - error: Argument type is unknown
+    Argument corresponds to parameter "object" in function "__new__" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:110:23 - error: Type of parameter "items" is unknown (reportUnknownParameterType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:110:23 - error: Type annotation is missing for parameter "items" (reportMissingParameterType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:112:20 - error: Argument type is unknown
+    Argument corresponds to parameter "object" in function "__new__" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:115:30 - error: Type of parameter "items" is unknown (reportUnknownParameterType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:115:30 - error: Type annotation is missing for parameter "items" (reportMissingParameterType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:118:40 - error: Argument type is unknown
+    Argument corresponds to parameter "object" in function "__new__" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:120:25 - error: Type of parameter "items" is unknown (reportUnknownParameterType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:120:25 - error: Type annotation is missing for parameter "items" (reportMissingParameterType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:122:34 - error: Argument type is unknown
+    Argument corresponds to parameter "object" in function "__new__" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:124:21 - error: Type of parameter "items" is unknown (reportUnknownParameterType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:124:21 - error: Type annotation is missing for parameter "items" (reportMissingParameterType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:126:31 - error: Argument type is unknown
+    Argument corresponds to parameter "object" in function "__new__" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:156:13 - error: Type of "result" is unknown (reportUnknownVariableType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:156:22 - error: Type of "transform" is partially unknown
+    Type of "transform" is "(tree: Tree[Unknown]) -> Unknown" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:158:24 - error: Argument type is unknown
+    Argument corresponds to parameter "obj" in function "hasattr" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:158:48 - error: Type of "children" is unknown (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:159:24 - error: Type of "children" is unknown (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:159:24 - error: Return type is unknown (reportUnknownVariableType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:160:20 - error: Return type is unknown (reportUnknownVariableType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:197:26 - error: Type of "children" is partially unknown
+    Type of "children" is "Unknown | List[Token | Tree[Token]]" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:197:26 - error: Argument type is partially unknown
+    Argument corresponds to parameter "object" in function "__new__"
+    Argument type is "Unknown | Token | Tree[Token]" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:197:35 - error: Cannot access attribute "children" for class "Token"
+    Attribute "children" is unknown (reportAttributeAccessIssue)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:200:17 - error: Type of "item" is partially unknown
+    Type of "item" is "Unknown | Token | Tree[Token]" (reportUnknownVariableType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:200:25 - error: Type of "children" is partially unknown
+    Type of "children" is "Unknown | List[Token | Tree[Token]]" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:200:34 - error: Cannot access attribute "children" for class "Token"
+    Attribute "children" is unknown (reportAttributeAccessIssue)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:201:20 - error: Type of "data" is partially unknown
+    Type of "data" is "Unknown | str" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:201:25 - error: Cannot access attribute "data" for class "Token"
+    Attribute "data" is unknown (reportAttributeAccessIssue)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:202:39 - error: Type of "children" is partially unknown
+    Type of "children" is "Unknown | List[Token | Tree[Token]]" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:202:39 - error: Argument type is partially unknown
+    Argument corresponds to parameter "object" in function "__new__"
+    Argument type is "Unknown | Token | Tree[Token]" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:202:44 - error: Cannot access attribute "children" for class "Token"
+    Attribute "children" is unknown (reportAttributeAccessIssue)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:203:21 - error: Type of "append" is partially unknown
+    Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:204:22 - error: Type of "data" is partially unknown
+    Type of "data" is "Unknown | str" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:204:27 - error: Cannot access attribute "data" for class "Token"
+    Attribute "data" is unknown (reportAttributeAccessIssue)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:205:37 - error: Type of "children" is partially unknown
+    Type of "children" is "Unknown | List[Token | Tree[Token]]" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:205:37 - error: Argument type is partially unknown
+    Argument corresponds to parameter "object" in function "__new__"
+    Argument type is "Unknown | Token | Tree[Token]" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:205:42 - error: Cannot access attribute "children" for class "Token"
+    Attribute "children" is unknown (reportAttributeAccessIssue)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:206:21 - error: Type of "append" is partially unknown
+    Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:207:22 - error: Type of "data" is partially unknown
+    Type of "data" is "Unknown | str" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:207:27 - error: Cannot access attribute "data" for class "Token"
+    Attribute "data" is unknown (reportAttributeAccessIssue)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:208:32 - error: Type of "children" is partially unknown
+    Type of "children" is "Unknown | List[Token | Tree[Token]]" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:208:32 - error: Argument type is partially unknown
+    Argument corresponds to parameter "object" in function "__new__"
+    Argument type is "Unknown | Token | Tree[Token]" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:208:37 - error: Cannot access attribute "children" for class "Token"
+    Attribute "children" is unknown (reportAttributeAccessIssue)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:209:21 - error: Type of "append" is partially unknown
+    Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:210:22 - error: Type of "data" is partially unknown
+    Type of "data" is "Unknown | str" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:210:27 - error: Cannot access attribute "data" for class "Token"
+    Attribute "data" is unknown (reportAttributeAccessIssue)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:211:33 - error: Type of "children" is partially unknown
+    Type of "children" is "Unknown | List[Token | Tree[Token]]" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:211:33 - error: Argument type is partially unknown
+    Argument corresponds to parameter "object" in function "__new__"
+    Argument type is "Unknown | Token | Tree[Token]" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:211:38 - error: Cannot access attribute "children" for class "Token"
+    Attribute "children" is unknown (reportAttributeAccessIssue)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:212:21 - error: Type of "append" is partially unknown
+    Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:213:22 - error: Type of "data" is partially unknown
+    Type of "data" is "Unknown | str" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:213:27 - error: Cannot access attribute "data" for class "Token"
+    Attribute "data" is unknown (reportAttributeAccessIssue)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:214:21 - error: Type of "append" is partially unknown
+    Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:214:55 - error: Type of "children" is partially unknown
+    Type of "children" is "Unknown | List[Token | Tree[Token]]" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:214:55 - error: Argument type is partially unknown
+    Argument corresponds to parameter "object" in function "__new__"
+    Argument type is "Unknown | Token | Tree[Token]" (reportUnknownArgumentType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:214:60 - error: Cannot access attribute "children" for class "Token"
+    Attribute "children" is unknown (reportAttributeAccessIssue)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/core/parser.py:216:56 - error: Argument type is partially unknown
+    Argument corresponds to parameter "operands" in function "__init__"
+    Argument type is "list[Unknown]" (reportUnknownArgumentType)
+/home/bisenbek/projects/sovereign/src/project_sovereign/vm/virtual_machine.py
+  /home/bisenbek/projects/sovereign/src/project_sovereign/vm/virtual_machine.py:38:5 - error: Type of "data_stack" is partially unknown
+    Type of "data_stack" is "list[Unknown]" (reportUnknownVariableType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/vm/virtual_machine.py:39:5 - error: Type of "control_stack" is partially unknown
+    Type of "control_stack" is "list[Unknown]" (reportUnknownVariableType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/vm/virtual_machine.py:40:5 - error: Type of "memory" is partially unknown
+    Type of "memory" is "dict[Unknown, Unknown]" (reportUnknownVariableType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/vm/virtual_machine.py:41:5 - error: Type of "registers" is partially unknown
+    Type of "registers" is "dict[Unknown, Unknown]" (reportUnknownVariableType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/vm/virtual_machine.py:126:17 - error: Type of "append" is partially unknown
+    Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/vm/virtual_machine.py:130:17 - error: Type of "append" is partially unknown
+    Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/vm/virtual_machine.py:132:17 - error: Type of "append" is partially unknown
+    Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/vm/virtual_machine.py:136:21 - error: Type of "append" is partially unknown
+    Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
+  /home/bisenbek/projects/sovereign/src/project_sovereign/vm/virtual_machine.py:140:17 - error: Type of "append" is partially unknown
+    Type of "append" is "(object: Unknown, /) -> None" (reportUnknownMemberType)
+192 errors, 0 warnings, 0 informations 
+[0;31m✗ Type checking failed[0m
+
+[0;33mRunning optional checks...[0m
+[0;33m⚠️  bandit not installed, skipping security check[0m
+
+[0;34mSummary:[0m
+[0;31m❌ Some checks failed[0m
+[0;33mRun './scripts/quality-check.sh fix' to auto-fix formatting and linting issues[0m
