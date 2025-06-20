@@ -16,6 +16,8 @@ from urllib.parse import urljoin
 import aiohttp
 from aiohttp import ClientTimeout
 
+from ..config import config
+
 logger = logging.getLogger(__name__)
 
 
@@ -23,12 +25,12 @@ logger = logging.getLogger(__name__)
 class OllamaConfig:
     """Configuration for Ollama client."""
 
-    base_url: str = "http://localhost:11434"
-    timeout: float = 60.0  # seconds
-    max_retries: int = 3
+    base_url: str = config.ollama_host
+    timeout: float = config.ollama_timeout
+    max_retries: int = config.ollama_max_retries
     retry_delay: float = 1.0  # seconds
-    connection_pool_size: int = 10
-    default_model: str = "llama3.2"
+    connection_pool_size: int = config.ollama_connection_pool_size
+    default_model: str = config.ollama_model
     temperature: float = 0.7
     max_tokens: int = 2048
 

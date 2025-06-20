@@ -15,9 +15,11 @@ PROJECT SOVEREIGN is a revolutionary programming language that combines:
 
 ```bash
 # Install PROJECT SOVEREIGN
-git clone <repository>
-cd project-sovereign
+git clone https://github.com/tinymachines/sovereign.git
+cd sovereign
+uv venv .venv --python 3.13
 source .venv/bin/activate
+uv pip install -e ".[dev]"
 
 # Run a program
 sovereign run program.sov
@@ -75,10 +77,17 @@ The language provides exactly 32 operations across 4 categories:
 3. **[Understanding Stacks](tutorials/stacks.md)** - Core execution model
 4. **[Using the REPL](tutorials/repl.md)** - Interactive development
 
+## Project Status
+
+- **Phase 1**: Core Infrastructure ✅ COMPLETED
+- **Phase 2**: LLM Integration ✅ COMPLETED  
+- **Phase 3**: CLI/UX Development 🚧 IN PROGRESS
+- **Phase 4**: Advanced Features 📋 PLANNED
+
 ## Community
 
-- **GitHub**: [Repository Issues](https://github.com/your-org/project-sovereign/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/your-org/project-sovereign/discussions)
+- **GitHub**: [Repository Issues](https://github.com/tinymachines/sovereign/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/tinymachines/sovereign/discussions)
 - **Contributing**: See [Development Guide](development/contributing.md)
 
 ## License

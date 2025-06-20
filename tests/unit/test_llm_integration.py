@@ -3,6 +3,7 @@ Unit tests for LLM integration in PROJECT SOVEREIGN.
 """
 
 import json
+import os
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
@@ -33,7 +34,14 @@ class TestOllamaClient:
     @pytest.fixture
     def client(self):
         """Create test client."""
-        config = OllamaConfig(base_url="http://localhost:11434")
+        # Test with custom config, not relying on environment variables
+        config = OllamaConfig(
+            base_url="http://localhost:11434",
+            timeout=30.0,
+            max_retries=3,
+            connection_pool_size=10,
+            default_model="llama3.2"
+        )
         return OllamaClient(config)
 
     @pytest.mark.asyncio
