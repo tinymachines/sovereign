@@ -19,7 +19,7 @@ class TestConfig:
         """Test default configuration values when no environment variables are set."""
         # Ensure dotenv doesn't load any .env file
         mock_load_dotenv.return_value = None
-        
+
         config = Config()
 
         assert config.ollama_host == "http://localhost:11434"

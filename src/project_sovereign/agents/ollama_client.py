@@ -11,6 +11,7 @@ import logging
 from collections.abc import AsyncIterator
 from dataclasses import dataclass, field
 from typing import Any
+from types import TracebackType
 from urllib.parse import urljoin
 
 import aiohttp
@@ -64,7 +65,12 @@ class OllamaClient:
         await self._ensure_session()
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: TracebackType | None,
+    ) -> None:
         await self.close()
 
     async def _ensure_session(self) -> None:

@@ -5,8 +5,6 @@ PROJECT SOVEREIGN package entry point.
 This module allows the package to be run directly with python -m project_sovereign.
 """
 
-import sys
-
 from .cli.main import cli
 
 

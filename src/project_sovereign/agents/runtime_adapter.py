@@ -116,7 +116,9 @@ class LLMRuntimeAdapter:
         try:
             return future.result(timeout=timeout)
         except TimeoutError as err:
-            raise RuntimeError(f"Code generation timed out after {timeout} seconds") from err
+            raise RuntimeError(
+                f"Code generation timed out after {timeout} seconds"
+            ) from err
         except Exception as e:
             raise RuntimeError(f"Code generation failed: {e}") from e
 
@@ -158,7 +160,9 @@ class LLMRuntimeAdapter:
         try:
             return future.result(timeout=timeout)
         except TimeoutError as err:
-            raise RuntimeError(f"Code evolution timed out after {timeout} seconds") from err
+            raise RuntimeError(
+                f"Code evolution timed out after {timeout} seconds"
+            ) from err
         except Exception as e:
             raise RuntimeError(f"Code evolution failed: {e}") from e
 
@@ -180,7 +184,9 @@ class LLMRuntimeAdapter:
         try:
             return future.result(timeout=timeout)
         except TimeoutError as err:
-            raise RuntimeError(f"Error analysis timed out after {timeout} seconds") from err
+            raise RuntimeError(
+                f"Error analysis timed out after {timeout} seconds"
+            ) from err
         except Exception as e:
             raise RuntimeError(f"Error analysis failed: {e}") from e
 

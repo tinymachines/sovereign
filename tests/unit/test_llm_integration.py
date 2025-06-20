@@ -3,7 +3,6 @@ Unit tests for LLM integration in PROJECT SOVEREIGN.
 """
 
 import json
-import os
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
@@ -41,7 +40,7 @@ class TestOllamaClient:
             timeout=30.0,
             max_retries=3,
             connection_pool_size=10,
-            default_model=config.ollama_model  # Use env value
+            default_model=config.ollama_model,  # Use env value
         )
         return OllamaClient(ollama_config)
 

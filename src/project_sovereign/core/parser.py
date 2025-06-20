@@ -96,7 +96,7 @@ class SovereignTransformer(Transformer):
         """Transform opcode token."""
         return str(items[0])
 
-    def REGISTER(self, token):
+    def REGISTER(self, token):  # noqa: N802
         """Transform register token."""
         reg_str = str(token)  # Full register string like 'r5'
         reg_num = int(reg_str[1:])  # Extract number after 'r'
