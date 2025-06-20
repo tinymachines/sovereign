@@ -26,6 +26,7 @@ from project_sovereign.agents.ollama_client import (
     OllamaResponse,
 )
 from project_sovereign.agents.runtime_adapter import LLMRuntimeAdapter
+from project_sovereign.config import config
 
 
 class TestOllamaClient:
@@ -34,15 +35,15 @@ class TestOllamaClient:
     @pytest.fixture
     def client(self):
         """Create test client."""
-        # Test with custom config, not relying on environment variables
-        config = OllamaConfig(
+        # Test with custom config, using environment variables where appropriate
+        ollama_config = OllamaConfig(
             base_url="http://localhost:11434",
             timeout=30.0,
             max_retries=3,
             connection_pool_size=10,
-            default_model="llama3.2"
+            default_model=config.ollama_model  # Use env value
         )
-        return OllamaClient(config)
+        return OllamaClient(ollama_config)
 
     @pytest.mark.asyncio
     async def test_health_check_success(self, client):
@@ -79,7 +80,7 @@ class TestOllamaClient:
             mock_response.json = AsyncMock(
                 return_value={
                     "models": [
-                        {"name": "llama3.2"},
+                        {"name": config.ollama_model},
                         {"name": "qwen2.5-coder"},
                     ]
                 }
@@ -88,7 +89,7 @@ class TestOllamaClient:
             client._session.get.return_value.__aenter__.return_value = mock_response
 
             models = await client.list_models()
-            assert models == ["llama3.2", "qwen2.5-coder"]
+            assert models == [config.ollama_model, "qwen2.5-coder"]
 
     @pytest.mark.asyncio
     async def test_generate_single_response(self, client):
@@ -99,7 +100,7 @@ class TestOllamaClient:
             mock_response.status = 200
             mock_response.json = AsyncMock(
                 return_value={
-                    "model": "llama3.2",
+                    "model": config.ollama_model,
                     "response": "Generated text",
                     "done": True,
                     "context": [1, 2, 3],
@@ -109,10 +110,10 @@ class TestOllamaClient:
 
             client._session.post.return_value.__aenter__.return_value = mock_response
 
-            response = await client.generate("Test prompt", model="llama3.2")
+            response = await client.generate("Test prompt", model=config.ollama_model)
 
             assert isinstance(response, OllamaResponse)
-            assert response.model == "llama3.2"
+            assert response.model == config.ollama_model
             assert response.response == "Generated text"
             assert response.done is True
             assert response.context == [1, 2, 3]
@@ -133,7 +134,7 @@ class TestOllamaClient:
                     status=200,
                     json=AsyncMock(
                         return_value={
-                            "model": "llama3.2",
+                            "model": config.ollama_model,
                             "response": "Success after retries",
                             "done": True,
                         }
@@ -170,7 +171,7 @@ class TestOllamaClient:
         """Test error analysis."""
         with patch.object(client, "generate", new_callable=AsyncMock) as mock_generate:
             mock_generate.return_value = OllamaResponse(
-                model="llama3.2",
+                model=config.ollama_model,
                 response=json.dumps(
                     {
                         "error_type": "syntax",
@@ -206,7 +207,7 @@ class TestModelManager:
         """Test model manager initialization."""
         manager.client.list_models = AsyncMock(
             return_value=[
-                "llama3.2:latest",
+                f"{config.ollama_model}:latest",
                 "qwen2.5-coder",
                 "unknown-model",
             ]
@@ -216,7 +217,7 @@ class TestModelManager:
 
         assert manager._initialized is True
         assert len(manager._available_models) == 3
-        assert "llama3.2:latest" in manager._available_models
+        assert f"{config.ollama_model}:latest" in manager._available_models
         assert "qwen2.5-coder" in manager._available_models
         assert "unknown-model" in manager._available_models
 
@@ -272,13 +273,13 @@ class TestModelManager:
         """Test model health check."""
         manager.client.generate = AsyncMock(
             return_value=OllamaResponse(
-                model="llama3.2",
+                model=config.ollama_model,
                 response="OK",
                 done=True,
             )
         )
 
-        result = await manager.test_model("llama3.2")
+        result = await manager.test_model(config.ollama_model)
 
         assert result is True
         manager.client.generate.assert_called_once()

@@ -13,8 +13,13 @@ from project_sovereign.config import Config, load_environment
 class TestConfig:
     """Test configuration management."""
 
-    def test_default_values(self):
-        """Test default configuration values."""
+    @patch.dict(os.environ, {}, clear=True)
+    @patch("project_sovereign.config.load_dotenv")
+    def test_default_values(self, mock_load_dotenv):
+        """Test default configuration values when no environment variables are set."""
+        # Ensure dotenv doesn't load any .env file
+        mock_load_dotenv.return_value = None
+        
         config = Config()
 
         assert config.ollama_host == "http://localhost:11434"
